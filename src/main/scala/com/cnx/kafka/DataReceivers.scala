@@ -47,7 +47,7 @@ class DataReceivers(sc: SparkContext) {
     //create spark streaming..
     val ssc = new StreamingContext(sc, Seconds(2))
     // Define the Kafka parameters, broker list must be specified
-    val kafkaParams = Map[String, String]("metadata.broker.list" -> "192.168.1.106:9092")
+    val kafkaParams = Map[String, String]("metadata.broker.list" -> "192.168.1.113:9092")
         
         //"group.id" -> "0"
  
@@ -66,11 +66,8 @@ class DataReceivers(sc: SparkContext) {
       // Create the RDD based on the offset ranges
      val rdd = KafkaUtils.createRDD[String, String, StringDecoder, StringDecoder](sc, kafkaParams, offsetRanges)
  
-     var i=0
-     rdd.foreachPartition { 
-      
-      partitionOfRecords =>
-       partitionOfRecords.foreach {i+=1; message => System.out.println(i + "====="+message.toString())}}
+
+     rdd.foreachPartition ( partitionOfRecords => partitionOfRecords.foreach(System.out.println))
     
     ssc.start()
     ssc.awaitTermination()

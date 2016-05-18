@@ -21,11 +21,8 @@ object CoreGate {
       .set("spark.cores.max", "1")
       .set("spark.cassandra.connection.host", "127.0.0.1")
       .set("spark.cassandra.connection.port","32771")
-      
-      
-    
-    
-      
+
+
     //val dh = new DataHelper(conf)
     //dh.createKeySpace()
     //dh.saveMsg(null)
