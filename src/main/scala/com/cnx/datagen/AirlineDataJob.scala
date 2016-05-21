@@ -10,7 +10,7 @@ import com.sun.corba.se.impl.activation.ListORBs
 class AirlineDataJob(sc: SparkContext) {
 
   def runAirlineDataJob(t:String) {
-    val readCsv = new ReadCsv(sc);
+    /**val readCsv = new ReadCsv(sc);
     //read all item from csv file
     val dfAirLine = readCsv.DoReadCsv(t)
     out.println("The item count of before sampled is : "+dfAirLine.count())
@@ -20,7 +20,7 @@ class AirlineDataJob(sc: SparkContext) {
     
     dfSample.show();
     val dest = dfSample.select("Dest", "Year","Month","DayofMonth").takeAsList(1).get(0).getString(0)
-    out.println(dest)
+    out.println(dest)**/
     
     
   }
