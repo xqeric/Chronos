@@ -5,14 +5,14 @@ assemblySettings
 name := "chronoslearn"
 version := "1.0"
 scalaVersion := "2.10.6"
-
+jarName := "chronoslearn.jar"
 
 //libraryDependencies ++= Seq(
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "1.6.0" % "provided",
+  "org.apache.spark" %% "spark-core" % "1.6.0" % "compile",
   "com.databricks" % "spark-csv_2.10" % "1.4.0",
-  "org.apache.spark" %% "spark-sql" % "1.6.0" % "provided",
-  "org.apache.spark" %% "spark-streaming" % "1.6.0" % "provided",
+  "org.apache.spark" %% "spark-sql" % "1.6.0" % "compile",
+  "org.apache.spark" %% "spark-streaming" % "1.6.0" % "compile",
   "org.apache.spark" %% "spark-streaming-kafka" % "1.6.0",
   "org.apache.commons" % "commons-pool2" % "2.3",
   "com.datastax.spark" %% "spark-cassandra-connector" % "1.5.0"
