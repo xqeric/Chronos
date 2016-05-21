@@ -1,0 +1,1 @@
+exec /usr/spark/spark-1.6/bin/spark-submit /usr/sparkwork/git/Chronos/target/scala-2.10/chronoslearn.jar
