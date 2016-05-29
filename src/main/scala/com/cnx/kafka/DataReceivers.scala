@@ -8,6 +8,7 @@ import org.apache.spark.streaming.kafka.{KafkaUtils, _}
 import org.apache.spark.streaming.scheduler.StreamingListener
 import com.datastax.spark.connector._
 import com.datastax.spark.connector.cql.CassandraConnector
+import java.net._
 
 //import  org.apache.kafka.common.message. //kafka.serializer.StringDecoder
 
@@ -39,10 +40,17 @@ class DataReceivers(sc: SparkContext) {
     // Create the direct stream with the Kafka parameters and topics
     val kafkaStream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topics)
 
+    val hostIp = InetAddress.getLocalHost.getHostAddress
+
+
+    org.apache.spark
+
     kafkaStream.foreachRDD(rdd => {
 
+      println("I am a worker at :" + hostIp)
+
       //rdd.map(a=>a._1).foreach{ data=> System.out.println(data.toString())}
-      rdd.map(a=> (a, a)).saveToCassandra("kafka_streaming", "airline");
+      rdd.map(a=> (a, a, hostIp)).saveToCassandra("kafka_streaming", "airline");
     }
     )
     /*rdd.foreach{
@@ -80,7 +88,7 @@ class DataReceivers(sc: SparkContext) {
     CassandraConnector(sc.getConf).withSessionDo { session =>
       session.execute(s"DROP KEYSPACE IF EXISTS kafka_streaming")
       session.execute(s"CREATE KEYSPACE IF NOT EXISTS kafka_streaming WITH REPLICATION = {'class': 'SimpleStrategy', 'replication_factor': 1 }")
-      session.execute(s"CREATE TABLE IF NOT EXISTS kafka_streaming.airline (id TEXT PRIMARY KEY, city TEXT)")
+      session.execute(s"CREATE TABLE IF NOT EXISTS kafka_streaming.airline (id TEXT, city TEXT,hosts TEXT, PRIMARY KEY (id, city, hosts))")
       session.execute(s"TRUNCATE kafka_streaming.airline")
     }
   }
